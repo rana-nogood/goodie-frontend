@@ -1,10 +1,9 @@
 import React from "react";
 import { createTheme, ThemeProvider, CssBaseline } from "@mui/material";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import "./index.css"; // Import the global CSS file
+import "./index.css";
 import Home from "./pages/Home";
 
-// Define your theme
 const theme = createTheme({
   typography: {
     fontFamily: "Suisse Intl Regular, sans-serif",
