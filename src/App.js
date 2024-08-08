@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./index.css";
 import Home from "./pages/Home";
 import BrandDNA from "./pages/BrandDNA";
+import BlogWriter from "./pages/BlogWriter";
 
 const theme = createTheme({
   typography: {
@@ -28,6 +29,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/brand-dna" element={<BrandDNA />} />
+          <Route path="/blog-writer" element={<BlogWriter />} />
         </Routes>
       </Router>
     </ThemeProvider>
