@@ -1,1 +1,1 @@
-export { default } from "./BrandDNA";
+export { default } from "./BrandDnaOverView";
