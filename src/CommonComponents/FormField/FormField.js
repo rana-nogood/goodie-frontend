@@ -5,11 +5,12 @@ import FormControl from "@mui/material/FormControl";
 import Checkbox from "@mui/material/Checkbox";
 import { makeStyles } from "@mui/styles";
 
-import { Box, Button, FormGroup, Grid, Typography } from "@mui/material";
+import { Box, Button, Chip, FormGroup, Grid, Typography } from "@mui/material";
 import CheckBoxGroup from "./components/CheckBoxGroup/CheckBoxGroup";
 import AddMoreButton from "./components/AddMoreButton/AddMoreButton";
 import FormikTextField from "./components/TextField/TextField";
 import RadioButtonGroup from "./components/RadioButtonGroup";
+import ChipGroup from "./components/ChipGroup/ChipGroup";
 
 const useStyles = makeStyles((theme) => ({
   checkbox: {
@@ -333,6 +334,20 @@ const GenerateFormField = (
             </Box>
           )}
         </FieldArray>
+      );
+
+    case "singleChoiceChipsGroup":
+      return (
+        <Field name={name}>
+          {({ field, form }) => (
+            <ChipGroup
+              name={name}
+              field={field}
+              form={form}
+              options={options}
+            />
+          )}
+        </Field>
       );
 
     default:

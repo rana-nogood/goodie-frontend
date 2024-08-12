@@ -21,7 +21,7 @@ const cards = [
     description:
       "Provide details about your brand to ensure personalized results",
     isIncomplete: true,
-    navigateTo: "brand-dna",
+    navigateTo: "brand-dna-overview",
   },
   {
     icon: <LinkOutlinedIcon />,
