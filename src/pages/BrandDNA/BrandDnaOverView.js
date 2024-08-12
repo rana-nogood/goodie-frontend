@@ -1,4 +1,5 @@
 import { Grid, Typography } from "@mui/material";
+import { useParams } from "react-router-dom";
 import WorkspacePageTemplate from "../Workspace/components/PageTemplate/PageTemplate";
 import BrandDNAOverviewCard from "./components/Card/Card";
 
@@ -10,8 +11,12 @@ const cards = [
 ];
 
 const BrandDnaOverview = () => {
+  const { brandId } = useParams();
   return (
-    <WorkspacePageTemplate title="Brand DNA" navigateTo={"/workspace"}>
+    <WorkspacePageTemplate
+      title="Brand DNA"
+      navigateTo={`/workspace-settings/${brandId}`}
+    >
       <Typography
         variant="h3"
         sx={{ fontSize: 22, mr: { md: 32 }, mb: 8, color: "#2D333A" }}

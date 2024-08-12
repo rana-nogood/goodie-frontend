@@ -11,6 +11,7 @@ import BlogWriter from "./pages/BlogWriter";
 import Workspace from "./pages/Workspace";
 import Layout from "./CommonComponents/Layout/Layout";
 import Dashboard from "./pages/Dashboard";
+import FinalBlog from "./pages/BlogWriter/components/FinalBlog/FinalBlog";
 
 const theme = createTheme({
   typography: {
@@ -31,23 +32,29 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <ThemeProviderLegacy theme={theme}>
-        {" "}
         <CssBaseline />
         <Router>
           <Routes>
             <Route path="/" element={<Home />} />
 
-            <Route path="/workspace/brand-dna/:id" element={<BrandDNAForm />} />
+            <Route
+              path="/workspace-settings/:brandId/brand-dna"
+              element={<BrandDNAForm />}
+            />
 
             <Route path="/blog-writer" element={<BlogWriter />} />
 
             <Route path="/" element={<Layout />}>
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/workspace" element={<Workspace />} />
+              <Route path="/dashboard/:brandId" element={<Dashboard />} />
               <Route
-                path="/workspace/brand-dna"
+                path="/workspace-settings/:brandId"
+                element={<Workspace />}
+              />
+              <Route
+                path="/workspace-settings/:brandId/brand-dna-overview"
                 element={<BrandDnaOverView />}
               />
+              <Route path="/blog-writer/:title" element={<FinalBlog />} />
             </Route>
           </Routes>
         </Router>

@@ -18,7 +18,6 @@ const useStyles = makeStyles((theme) => ({
     borderBottom: "0.01px solid #E1E1E1",
     display: "flex",
     flexDirection: "row",
-    columnGap: 150,
   },
   buttonsBox: {
     display: "flex",
@@ -31,18 +30,21 @@ const FixedStepperHeader = ({
   activeStep,
   setActiveStep,
   button1Label,
+  stepperWidth,
+  columnGap = 15,
 }) => {
   const theme = useTheme();
   const classes = useStyles(theme);
   const navigate = useNavigate();
   return (
-    <Box className={classes.stepper}>
+    <Box className={classes.stepper} sx={{ columnGap: columnGap }}>
       <CustomStepper
         steps={steps}
         setActiveStep={setActiveStep}
         activeStep={activeStep}
+        width={stepperWidth}
       />
-      <div className={classes.buttonsBox}>
+      <div className={classes.buttonsBox} styles={{ columnGap: columnGap }}>
         <ChipButton
           label={button1Label}
           iconBefore={<CheckCircleOutlinedIcon style={{ fontSize: "23px" }} />}

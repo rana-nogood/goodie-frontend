@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CustomStepper = ({ steps, activeStep, setActiveStep }) => {
+const CustomStepper = ({ steps, activeStep, setActiveStep, width = 670 }) => {
   const classes = useStyles();
 
   return (
@@ -44,7 +44,7 @@ const CustomStepper = ({ steps, activeStep, setActiveStep }) => {
       activeStep={activeStep}
       style={{
         marginLeft: 210,
-        width: 670,
+        width: width,
       }}
       className={classes.root}
     >
