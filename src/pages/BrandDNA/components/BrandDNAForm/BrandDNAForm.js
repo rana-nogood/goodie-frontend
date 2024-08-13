@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Form, Formik } from "formik";
 import Audience from "./components/Audience/Audience";
 import Guidelines from "./components/Guidelines";
@@ -10,6 +10,9 @@ import EastIcon from "@mui/icons-material/East";
 import WestIcon from "@mui/icons-material/West";
 import ChipButton from "../../../../CommonComponents/ChipButton/ChipButton";
 import FixedStepperHeader from "../../../../CommonComponents/StepperFixedHeader/StepperHeader";
+import axios from "axios";
+import { API_URL } from "../../../../api";
+import { useNavigate, useParams } from "react-router-dom";
 
 const steps = [
   "Brand Values",
@@ -19,7 +22,22 @@ const steps = [
 ];
 
 const BrandDNA = () => {
-  const [activeStep, setActiveStep] = useState(0);
+  const { brandId, step } = useParams();
+  const [activeStep, setActiveStep] = useState(parseInt(step) || 0);
+
+  const [brandDetails, setBrandDetails] = useState({});
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    axios
+      .get(`${API_URL}/brands/${brandId}`)
+      .then((response) => {
+        setBrandDetails(response.data);
+      })
+      .catch((err) => {
+        console.log("testttt error", err);
+      });
+  }, [brandId]);
 
   const getStepContent = useCallback((step) => {
     switch (step) {
@@ -31,14 +49,19 @@ const BrandDNA = () => {
         return <Audience />;
       case 3:
         return <Guidelines />;
-      default:
-        throw new Error("Unknown step");
     }
   }, []);
 
   const handleNext = (values) => {
     if (activeStep + 1 === 4) {
-      // submit the form not draft
+      axios
+        .patch(`${API_URL}/brands/${brandId}`, values, {})
+        .then(() => {
+          navigate(`/workspace-settings/${brandId}`);
+        })
+        .catch((err) => {
+          console.log("testttt error", err);
+        });
     }
     setActiveStep(activeStep + 1);
   };
@@ -46,21 +69,56 @@ const BrandDNA = () => {
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
+
+  const handleOnBlur = (values) => {
+    axios
+      .patch(`${API_URL}/brands/${brandId}`, values, {})
+      .then(() => {})
+      .catch((err) => {
+        console.log("testttt error", err);
+      });
+  };
+
   const initialValues = useMemo(
     () => ({
-      milestones: ["", "", ""],
-      customer_profiles: ["", ""],
-      pain_points: ["", "", ""],
-      competitors: ["", "", ""],
-      differentiators: ["", "", ""],
+      brand_values: brandDetails?.brand_values,
+      usp: brandDetails?.usp,
+      mission_statement: brandDetails?.mission_statement,
+      vission_statement: brandDetails?.vission_statement,
+      archetype: brandDetails?.archetype,
+      personality_traits: brandDetails?.personality_traits,
+      origin_story: brandDetails?.origin_story,
+      milestones: brandDetails?.milestones || ["", "", ""],
+      customer_profiles: brandDetails?.customer_profiles,
+      pain_points: brandDetails?.pain_points,
+      competitors: brandDetails?.competitors,
+      differentiators: brandDetails?.differentiators,
       primary_colors: [""],
       secondary_colors: [""],
       accent_colors: [""],
       headline_font: [""],
       body_font: [""],
       accent_font: [""],
+      adaptability: brandDetails?.adaptability,
+      cultural_sensitivity: brandDetails?.cultural_sensitivity,
+      tone_emotion: brandDetails?.tone_emotion,
+      tone_formality: brandDetails?.tone_formality,
+      tone_style: brandDetails?.tone_style,
+      target_audience_age_range: brandDetails?.target_audience_age_range,
+      target_audience_gender: brandDetails?.target_audience_gender,
+      target_audience_location: brandDetails?.target_audience_location,
+      target_audience_interests: brandDetails?.target_audience_interests,
+      customer_journey: brandDetails?.customer_journey,
+      primary_market: brandDetails?.primary_market,
+      geographic_focus: brandDetails?.geographic_focus,
+      primary_language: brandDetails?.primary_language,
+      additional_languages: brandDetails?.additional_languages,
+      core_themes: brandDetails?.core_themes,
+      content_categories: brandDetails?.content_categories,
+      logo_usage: brandDetails?.logo_usage,
+      imagery_style: brandDetails?.imagery_style,
     }),
-    []
+    [brandDetails]
   );
   return (
     <BottomGradientContainer gradient="linear-gradient(to top, #C7F565 0%, #FFFFFF 100%)">
@@ -73,6 +131,7 @@ const BrandDNA = () => {
       <Formik
         initialValues={initialValues}
         children={(BrandValues, CommunicationStyle, Guidelines, Audience)}
+        enableReinitialize={true}
       >
         {({ values, errors, dirty }) => (
           <Box
@@ -84,8 +143,9 @@ const BrandDNA = () => {
               alignItems: "center",
             }}
           >
-            <Form>{getStepContent(activeStep, values, errors, dirty)}</Form>
-
+            <Form onBlur={() => handleOnBlur(values)}>
+              {getStepContent(activeStep, values, errors, dirty)}
+            </Form>
             <Box
               style={{
                 marginTop: 95.12,

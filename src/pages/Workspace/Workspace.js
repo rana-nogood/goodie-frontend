@@ -5,8 +5,12 @@ import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import LinkOutlinedIcon from "@mui/icons-material/LinkOutlined";
 import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
 import WorkspacePageTemplate from "./components/PageTemplate/PageTemplate";
+import { useEffect, useState } from "react";
+import { API_URL } from "../../api";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 
-const cards = [
+const statelessCards = [
   {
     icon: <SettingsOutlinedIcon />,
     title: "General",
@@ -20,14 +24,14 @@ const cards = [
     title: "Brand DNA",
     description:
       "Provide details about your brand to ensure personalized results",
-    isIncomplete: true,
+    isIncomplete: "",
     navigateTo: "brand-dna-overview",
   },
   {
     icon: <LinkOutlinedIcon />,
     title: "Link Social Media",
     description: "Connect your company to your social media accounts ",
-    isIncomplete: true,
+    isIncomplete: "",
     navigateTo: "",
   },
   {
@@ -40,12 +44,53 @@ const cards = [
 ];
 
 const Workspace = () => {
+  const { brandId } = useParams();
+  const [cards, setCards] = useState(statelessCards);
+  const [completetionStatuses, setCompletionStatuses] = useState({});
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    axios
+      .get(`${API_URL}/brands/${brandId}/workspace-status`)
+      .then((response) => {
+        const statuses = response.data;
+        setCompletionStatuses(statuses);
+        const completionMapping = {
+          "Brand DNA": !statuses["brand_dna_completed"],
+        };
+
+        const updatedCards = cards.map((card) => {
+          if (card.title === "Brand DNA") {
+            return { ...card, isIncomplete: completionMapping["Brand DNA"] };
+          }
+          return card;
+        });
+        setCards(updatedCards);
+      })
+      .catch((err) => {
+        console.log("testttt error", err);
+      });
+  }, [brandId, cards]);
+
+  const handleCardClick = (card) => {
+    navigate(card.navigateTo, {
+      state: { completetionStatuses },
+    });
+  };
+
   return (
     <WorkspacePageTemplate title="Workspace settings">
       <Grid container spacing={3} direction="row" alignItems="center">
         {cards.map((card, index) => {
           return (
-            <Grid item xs={8} sm={4} md={4} key={index}>
+            <Grid
+              item
+              xs={8}
+              sm={4}
+              md={4}
+              key={index}
+              onClick={() => handleCardClick(card)}
+            >
               <WorkSpaceCard card={card} />
             </Grid>
           );

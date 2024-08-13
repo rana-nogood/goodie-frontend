@@ -1,10 +1,8 @@
 import { Card, Typography } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import BoxWithStatus from "../../../../CommonComponents/BoxWithStatus";
 
 const WorkSpaceCard = ({ card }) => {
-  const { icon, title, description, isIncomplete, navigateTo } = card;
-  const navigate = useNavigate();
+  const { icon, title, description, isIncomplete } = card;
   return (
     <Card
       style={{
@@ -15,7 +13,6 @@ const WorkSpaceCard = ({ card }) => {
         flexDirection: "column",
         cursor: "pointer",
       }}
-      onClick={() => navigate(navigateTo)}
     >
       {isIncomplete ? (
         <BoxWithStatus isIncomplete={isIncomplete}>{icon}</BoxWithStatus>

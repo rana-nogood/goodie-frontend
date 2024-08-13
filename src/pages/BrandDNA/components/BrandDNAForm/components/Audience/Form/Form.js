@@ -119,7 +119,7 @@ const AudienceForm = () => {
         }
         children={
           <FormField
-            type="dynamicRadionButtonsGroup"
+            type="singleDynamicRadionButtonsGroup"
             name={`primary_language`}
             variant="outlined"
             fullwidth
