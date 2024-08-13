@@ -11,10 +11,10 @@ import {
 } from "@mui/material";
 import FormatBoldIcon from "@mui/icons-material/FormatBold";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
-import H1Icon from "./CommonComponents/customIcons/H1Icon";
-import H2Icon from "./CommonComponents/customIcons/H2Icon";
-import H3Icon from "./CommonComponents/customIcons/H3Icon";
-import PIcon from "./CommonComponents/customIcons/PIcon";
+import H1Icon from "../../../../CommonComponents/customIcons/H1Icon";
+import H2Icon from "../../../../CommonComponents/customIcons/H2Icon";
+import H3Icon from "../../../../CommonComponents/customIcons/H3Icon";
+import PIcon from "../../../../CommonComponents/customIcons/PIcon";
 import TurndownService from "turndown";
 
 const CustomToolbar = () => (
