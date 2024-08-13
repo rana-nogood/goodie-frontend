@@ -41,6 +41,10 @@ function App() {
               path="/workspace-settings/:brandId/brand-dna"
               element={<BrandDNAForm />}
             />
+            <Route
+              path="/workspace-settings/:brandId/brand-dna/:step"
+              element={<BrandDNAForm />}
+            />
 
             <Route path="/blog-writer" element={<BlogWriter />} />
 

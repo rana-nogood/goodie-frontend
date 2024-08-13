@@ -1,17 +1,46 @@
 import { Grid, Typography } from "@mui/material";
-import { useParams } from "react-router-dom";
+import { useEffect, useMemo, useState } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { API_URL } from "../../api";
 import WorkspacePageTemplate from "../Workspace/components/PageTemplate/PageTemplate";
 import BrandDNAOverviewCard from "./components/Card/Card";
 
-const cards = [
-  { isIncomplete: false, title: "Brand Values" },
-  { isIncomplete: false, title: "Communication Style" },
-  { isIncomplete: false, title: "Audience" },
-  { isIncomplete: true, title: "Content and Visual Guidelines" },
-];
-
 const BrandDnaOverview = () => {
   const { brandId } = useParams();
+  const location = useLocation();
+  const { completetionStatuses } = location.state || {};
+  const navigate = useNavigate();
+  const cards = useMemo(
+    () => [
+      {
+        isIncomplete:
+          completetionStatuses &&
+          !completetionStatuses["brand_values_completed"],
+        title: "Brand Values",
+        step: 0,
+      },
+      {
+        isIncomplete:
+          completetionStatuses &&
+          !completetionStatuses["communication_style_completed"],
+        title: "Communication Style",
+        step: 1,
+      },
+      {
+        isIncomplete:
+          completetionStatuses && !completetionStatuses["audience_completed"],
+        title: "Audience",
+        step: 2,
+      },
+      {
+        isIncomplete:
+          completetionStatuses && !completetionStatuses["guidelines_completed"],
+        title: "Content and Visual Guidelines",
+        step: 3,
+      },
+    ],
+    [completetionStatuses]
+  );
   return (
     <WorkspacePageTemplate
       title="Brand DNA"
@@ -30,7 +59,18 @@ const BrandDnaOverview = () => {
       <Grid container spacing={3} direction="row" alignItems="center">
         {cards.map((card, index) => {
           return (
-            <Grid item xs={12} sm={12} md={6} key={index}>
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              md={6}
+              key={index}
+              onClick={() =>
+                navigate(
+                  `/workspace-settings/${brandId}/brand-dna/${card.step}`
+                )
+              }
+            >
               <BrandDNAOverviewCard card={card} />
             </Grid>
           );

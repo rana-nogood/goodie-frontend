@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ErrorMessage, Field, FieldArray } from "formik";
 import TextField from "@mui/material/TextField";
 import FormControl from "@mui/material/FormControl";
@@ -217,6 +217,7 @@ const GenerateFormField = (
           setInputValue("");
         }
       };
+
       return (
         <Field name={name}>
           {({ field, form }) => {
@@ -347,6 +348,80 @@ const GenerateFormField = (
               options={options}
             />
           )}
+        </Field>
+      );
+
+    case "singleDynamicRadionButtonsGroup":
+      return (
+        <Field name={name}>
+          {({ field, form }) => {
+            const { value = "" } = field;
+            const { setFieldValue } = form;
+
+            value && !options.includes(value) && setInputValue(value);
+            return (
+              <FormControl
+                component="fieldset"
+                style={{ display: "flex", flexDirection: "column", rowGap: 10 }}
+              >
+                {label && (
+                  <Typography
+                    variant="h4"
+                    sx={{ fontSize: "16px", fontWeight: 500 }}
+                  >
+                    {label}
+                  </Typography>
+                )}
+                <FormGroup>
+                  <RadioButtonGroup
+                    name={name}
+                    field={field}
+                    form={form}
+                    options={options}
+                  />
+
+                  <Box
+                    display="flex"
+                    sx={{
+                      padding: 0,
+                      margin: 0,
+                      mt: -1.3,
+                      ml: -0.1,
+                    }}
+                  >
+                    <Checkbox
+                      className={classes.checkbox}
+                      checked={inputValue?.trim() === value}
+                      disabled={true}
+                      sx={{ padding: 0 }}
+                    />
+                    <TextField
+                      placeholder={placeholder}
+                      value={inputValue}
+                      onChange={(event) => {
+                        setInputValue(event.target.value);
+                        setFieldValue(name, event.target.value);
+                      }}
+                      InputProps={{
+                        sx: { fontSize: 14 },
+                      }}
+                      sx={{
+                        border: "none",
+                        "& .MuiOutlinedInput-root": {
+                          "& fieldset": {
+                            border: "none",
+                          },
+                        },
+                        padding: 0,
+                        marginLeft: -0.5,
+                        width: "100%",
+                      }}
+                    />
+                  </Box>
+                </FormGroup>
+              </FormControl>
+            );
+          }}
         </Field>
       );
 
