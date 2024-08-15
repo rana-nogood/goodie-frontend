@@ -88,6 +88,10 @@ const ReferenceCard = ({ reference, onSelect, isSelected }) => {
             columnGap: 0.5,
             alignItems: "center",
           }}
+          onClick={(e) => {
+            e.preventDefault();
+            window.open(url, "_blank");
+          }}
         >
           <OpenInNewOutlinedIcon style={{ fontSize: 12 }} /> Read more
         </Typography>

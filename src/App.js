@@ -47,6 +47,10 @@ function App() {
             />
 
             <Route path="/blog-writer" element={<BlogWriter />} />
+            <Route
+              path="/dashboard/:brandId/blog-writer"
+              element={<BlogWriter />}
+            />
 
             <Route path="/" element={<Layout />}>
               <Route path="/dashboard/:brandId" element={<Dashboard />} />

@@ -84,7 +84,7 @@ const GenerateFormField = (
                   helperText={helperText}
                   size={size}
                   multiline={multiline}
-                  rows={multiline && 7}
+                  rows={multiline ? 7 : 1}
                   disabled={disabled}
                   onChange={(event) => handleInputChange(event, field)}
                   placeholder={placeholder}
