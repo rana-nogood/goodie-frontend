@@ -1,8 +1,23 @@
 import { Box, Typography } from "@mui/material";
+import axios from "axios";
+import { useFormikContext } from "formik";
+import { ML_API_URL } from "../../../../api";
 import FormField from "../../../../CommonComponents/FormField";
 import BlogWriterCard from "../Card/Card";
-const Topic = ({ setActiveStep }) => {
+
+const Topic = ({ setActiveStep, setReferences }) => {
+  const { values } = useFormikContext();
+
+  // TO-DO: return to normal after ml BE is fixed
+
   const handleNext = () => {
+    // axios
+    //   .post(`${ML_API_URL}/createai/generaterefernces`, values)
+    //   .then((response) => {
+    //     setReferences(response.data.references);
+    //     setActiveStep(1);
+    //   })
+    //   .catch((err) => {});
     setActiveStep(1);
   };
   return (

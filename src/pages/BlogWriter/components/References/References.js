@@ -5,63 +5,64 @@ import BlogWriterCard from "../Card/Card";
 import ReferenceCard from "./components/Card/Card";
 import AddCircleOutlineSharpIcon from "@mui/icons-material/AddCircleOutlineSharp";
 
-const referencesCards = [
+const references = [
   {
-    title: "The Ultimate Guide to Marketing Referral Programs With Examples",
-    url: "url1",
-    date: "Aug. 2024",
-    source: "Bloomberg Business News",
+    url: "https://www.reddit.com/r/ClaudeAI/comments/1dqj1lg/claude_35_sonnet_vs_gpt4_a_programmers/",
+    title: "Claude 3.5 Sonnet vs GPT-4: A programmer's perspective ...",
+    source: "Reddit · r/ClaudeAI",
+    date: "",
   },
   {
-    title: "The Ultimate Guide to Marketing Referral Programs With Examples",
-    url: "url2",
-    date: "Aug. 2024",
-    source: "Bloomberg Business News",
+    url: "https://www.vellum.ai/blog/claude-3-5-sonnet-vs-gpt4o",
+    title: "Comparison Analysis: Claude 3.5 Sonnet vs GPT-4o",
+    source: "Vellum AI",
+    date: "Jun 25, 2024",
   },
   {
-    title: "The Ultimate Guide to Marketing Referral Programs With Examples",
-    url: "url3",
-    date: "Aug. 2024",
-    source: "Bloomberg Business News",
+    url: "https://writingmate.ai/blog/claude-3-5-gpt-4o-comparison",
+    title: "Claude 3.5 vs GPT-4o: A Comprehensive Comparison",
+    source: "Writingmate.ai",
+    date: "2 days ago",
   },
   {
-    title: "The Ultimate Guide to Marketing Referral Programs With Examples",
-    url: "url4",
-    date: "Aug. 2024",
-    source: "Bloomberg Business News",
+    url: "https://www.glbgpt.com/blog/claude-3-5-vs-gpt-4-a-performance-comparison/",
+    title: "Claude 3.5 vs. GPT-4: A Performance Comparison",
+    source: "GlobalGPT",
+    date: "Jul 6, 2024",
   },
   {
-    title: "The Ultimate Guide to Marketing Referral Programs With Examples",
-    url: "url5",
-    date: "Aug. 2024",
-    source: "Bloomberg Business News",
+    url: "https://www.linkedin.com/pulse/ai-creators-9-claude-35-outperforming-gpt-4o-can-read-zak-aghbal-818xc",
+    title: "AI for Creators #9: Claude 3.5 is Outperforming GPT-4o ...",
+    source: "LinkedIn · Zak Aghbal",
+    date: "",
   },
   {
-    title: "The Ultimate Guide to Marketing Referral Programs With Examples",
-    url: "url6",
-    date: "Aug. 2024",
-    source: "Bloomberg Business News",
+    url: "https://www.digitaltrends.com/computing/claude-sonnet-vs-gpt-4o-comparison/",
+    title: "Claude 3.5 Sonnet vs. GPT-4o: here's how they stack up",
+    source: "Digital Trends",
+    date: "Jul 5, 2024",
   },
   {
-    title: "The Ultimate Guide to Marketing Referral Programs With Examples",
-    url: "url7",
-    date: "Aug. 2024",
-    source: "Bloomberg Business News",
+    url: "https://zapier.com/blog/claude-vs-chatgpt/",
+    title: "Claude vs. ChatGPT: What's the difference? [2024]",
+    source: "Zapier",
+    date: "Jul 16, 2024",
   },
   {
-    title: "The Ultimate Guide to Marketing Referral Programs With Examples",
-    url: "url8",
-    date: "Aug. 2024",
-    source: "Bloomberg Business News",
+    url: "https://community.openai.com/t/gpt4-comparison-to-anthropic-opus-on-benchmarks/726147",
+    title: "Gpt4 comparison to anthropic Opus on benchmarks",
+    source: "OpenAI Developer Forum",
+    date: "Apr 24, 2024",
   },
   {
-    title: "The Ultimate Guide to Marketing Referral Programs With Examples",
-    url: "url9",
-    date: "Aug. 2024",
-    source: "Bloomberg Business News",
+    url: "https://www.youtube.com/watch?v=_HYfYLm5QEA",
+    title: "GPT-4o VS Claude 3.5 Sonnet - Which AI is #1?",
+    source: "YouTube · Skill Leap AI",
+    date: "",
   },
 ];
-
+// TO-DO: return to normal after ml BE is fixed
+// const References = ({ setActiveStep, references }) => {
 const References = ({ setActiveStep }) => {
   const { setFieldValue } = useFormikContext();
   const [selectedReferences, setSelectedReferences] = useState([]);
@@ -71,7 +72,7 @@ const References = ({ setActiveStep }) => {
     const isSelected = selectedReferences.includes(reference.url);
     if (isSelected) {
       setSelectedReferences(
-        selectedReferences.filter((r) => r !== reference.id)
+        selectedReferences.filter((r) => r !== reference.url)
       );
     } else {
       setSelectedReferences([...selectedReferences, reference.url]);
@@ -139,7 +140,7 @@ const References = ({ setActiveStep }) => {
           </Box>
 
           <Grid container spacing={3}>
-            {referencesCards.map((reference, index) => (
+            {references.map((reference, index) => (
               <Grid item xs={12} md={4} key={index}>
                 <ReferenceCard
                   reference={reference}

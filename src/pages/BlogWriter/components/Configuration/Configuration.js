@@ -1,4 +1,7 @@
 import { Box, Typography } from "@mui/material";
+import axios from "axios";
+import { useFormikContext } from "formik";
+import { ML_API_URL } from "../../../../api";
 import FormField from "../../../../CommonComponents/FormField/FormField";
 import {
   toneEmotionOptions,
@@ -9,10 +12,19 @@ import BlogWriterCard from "../Card/Card";
 import InputSection from "./components/InputSection";
 
 const Configuration = ({ setActiveStep }) => {
+  const { values } = useFormikContext();
+  const handleNext = () => {
+    axios
+      .post(`${ML_API_URL}/createai/generateoutline`, values)
+      .then((response) => {
+        setActiveStep(3);
+      })
+      .catch((err) => {});
+  };
   return (
     <BlogWriterCard
       title="Configure the Blog"
-      handleNext={() => setActiveStep(3)}
+      handleNext={() => handleNext()}
       handleBack={() => setActiveStep(1)}
       width={999}
       marginTop={-20}
@@ -41,7 +53,7 @@ const Configuration = ({ setActiveStep }) => {
         >
           <InputSection title="Word Count" description="">
             <FormField
-              name="wordCount"
+              name="config.wordCount"
               type="input"
               customizedStyling={{ width: "30%" }}
               placeholder="1234"
@@ -49,32 +61,32 @@ const Configuration = ({ setActiveStep }) => {
           </InputSection>
           <InputSection
             title="Language style"
-            description="Given your Brand DNA, the tone is Casual. Select more or change if necessary for this specific article."
+            description={`Given your Brand DNA, the tone is ${values?.initialLanguageStyle}. Select more or change if necessary for this specific article.`}
           >
             <FormField
-              name="languageStyle"
+              name="config.languageStyle"
               type="singleChoiceChipsGroup"
               options={toneFormalityOptions}
             />
           </InputSection>
           <InputSection
             title="Tone of voice"
-            description="Given your Brand DNA, the tone is Casual. Select more or change if necessary for this specific article."
+            description="Given your Brand DNA, your tone of voice is as follows. Select the most relevant for this article."
           >
             <FormField
-              name="toneOfVoice"
+              name="config.tone"
               type="singleChoiceChipsGroup"
-              options={toneEmotionOptions}
+              options={values?.toneOptions}
             />
           </InputSection>
           <InputSection
             title="Style of writing"
-            description="Given your Brand DNA, the tone is Casual. Select more or change if necessary for this specific article."
+            description="Given your Brand DNA, your style of writing is as follows. Select the most relevant for this article."
           >
             <FormField
-              name="styleOfWriting"
+              name="config.style"
               type="singleChoiceChipsGroup"
-              options={toneStyleOptions}
+              options={values?.styleOptions}
             />
           </InputSection>
           <InputSection
@@ -83,7 +95,7 @@ const Configuration = ({ setActiveStep }) => {
           >
             {" "}
             <FormField
-              name="primaryKeywords"
+              name="config.primaryKeyword"
               type="input"
               customizedStyling={{ width: "30%" }}
               placeholder="Growth"
@@ -95,7 +107,7 @@ const Configuration = ({ setActiveStep }) => {
           >
             {" "}
             <FormField
-              name="secondaryKeywords"
+              name="config.secondaryKeyword"
               type="input"
               customizedStyling={{ width: "60%" }}
               placeholder="Growth, Analytics, C-Suite"
