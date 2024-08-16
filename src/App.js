@@ -11,7 +11,7 @@ import Workspace from "./pages/Workspace";
 import Layout from "./CommonComponents/Layout/Layout";
 import Dashboard from "./pages/Dashboard";
 import FinalBlog from "./pages/BlogWriter/components/FinalBlog/FinalBlog";
-// import BrandDnaOverview from "./pages/BrandDna/BrandDnaOverView";
+import BrandDnaOverview from "./pages/BrandDna/BrandDnaOverView";
 
 const theme = createTheme({
   typography: {
@@ -58,10 +58,10 @@ function App() {
                 path="/workspace-settings/:brandId"
                 element={<Workspace />}
               />
-              {/* <Route
+              <Route
                 path="/workspace-settings/:brandId/brand-dna-overview"
                 element={<BrandDnaOverview />}
-              /> */}
+              />
               <Route path="/dashboard/:brandId/blog-writer/:title" element={<FinalBlog />} />
             </Route>
           </Routes>
