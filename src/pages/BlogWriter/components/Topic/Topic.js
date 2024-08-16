@@ -8,17 +8,16 @@ import BlogWriterCard from "../Card/Card";
 const Topic = ({ setActiveStep, setReferences }) => {
   const { values } = useFormikContext();
 
-  // TO-DO: return to normal after ml BE is fixed
-
   const handleNext = () => {
-    // axios
-    //   .post(`${ML_API_URL}/createai/generaterefernces`, values)
-    //   .then((response) => {
-    //     setReferences(response.data.references);
-    //     setActiveStep(1);
-    //   })
-    //   .catch((err) => {});
-    setActiveStep(1);
+    axios
+      .post(`${ML_API_URL}/createai/generaterefernces`, values)
+      .then((response) => {
+        setReferences(response.data.references);
+        setActiveStep(1);
+      })
+      .catch((err) => {
+        console.log("testtt err", err);
+      });
   };
   return (
     <BlogWriterCard

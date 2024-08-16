@@ -1,19 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { Box, Paper, GlobalStyles, TextField } from "@mui/material";
 import TurndownService from "turndown";
 import CustomToolbar from "./components/customToolbar";
-const TextEditor = () => {
-  const [editorContent, setEditorContent] = useState("");
+import { marked } from "marked";
+
+const TextEditor = ({ generatedOutline, setEditedBlog }) => {
+  const [editorContent, setEditorContent] = useState(generatedOutline);
   const [markdownContent, setMarkdownContent] = useState("");
 
   const turndownService = new TurndownService();
+
+  useEffect(() => {
+    const html = marked(generatedOutline);
+    setEditorContent(html);
+  }, [generatedOutline]);
 
   const handleEditorChange = (content) => {
     setEditorContent(content);
     const markdown = turndownService.turndown(content);
     setMarkdownContent(markdown);
+    setEditedBlog(content);
   };
 
   const modules = {
@@ -28,7 +36,6 @@ const TextEditor = () => {
         width: "830px",
         height: "auto",
         margin: "0 auto",
-        padding: "10px",
         boxSizing: "border-box",
         borderRadius: "11px",
       }}

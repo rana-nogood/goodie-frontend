@@ -62,7 +62,7 @@ function App() {
                 path="/workspace-settings/:brandId/brand-dna-overview"
                 element={<BrandDnaOverView />}
               />
-              <Route path="/blog-writer/:title" element={<FinalBlog />} />
+              <Route path="/dashboard/:brandId/blog-writer/:title" element={<FinalBlog />} />
             </Route>
           </Routes>
         </Router>

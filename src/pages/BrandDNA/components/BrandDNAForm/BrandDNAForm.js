@@ -127,6 +127,7 @@ const BrandDNA = () => {
         setActiveStep={setActiveStep}
         activeStep={activeStep}
         button1Label="Progress Saved "
+        onExit={() => navigate(`/workspace-settings/${brandId}`)}
       />
       <Formik
         initialValues={initialValues}

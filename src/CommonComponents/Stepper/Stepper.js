@@ -36,7 +36,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CustomStepper = ({ steps, activeStep, setActiveStep, width = 670 }) => {
+const CustomStepper = ({
+  steps,
+  activeStep,
+  setActiveStep,
+  width = 670,
+  enableStepperClick = true,
+}) => {
   const classes = useStyles();
 
   return (
@@ -49,8 +55,13 @@ const CustomStepper = ({ steps, activeStep, setActiveStep, width = 670 }) => {
       className={classes.root}
     >
       {steps.map((label, index) => (
-        <Step key={index} onClick={() => setActiveStep(index)}>
-          <StepLabel>{label}</StepLabel>
+        <Step
+          key={index}
+          onClick={() => enableStepperClick && setActiveStep(index)}
+        >
+          <StepLabel style={{ cursor: enableStepperClick && "pointer" }}>
+            {label}
+          </StepLabel>
         </Step>
       ))}
     </Stepper>

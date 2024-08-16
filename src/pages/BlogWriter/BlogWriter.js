@@ -7,7 +7,7 @@ import References from "./components/References";
 import Configuration from "./components/Configuration";
 import Outline from "./components/Outline";
 import { Form, Formik } from "formik";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { API_URL } from "../../api";
 
@@ -16,9 +16,10 @@ const steps = ["Topic", "References", "Configure", "Outline"];
 const BlogWriter = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [recommendedReferences, setRecommendedReferences] = useState([]);
-  const [generatedOutline, setGeneratedOutline] = useState([]);
+  const [generatedOutline, setGeneratedOutline] = useState("");
   const { brandId } = useParams();
   const [brandDetails, setBrandDetails] = useState({});
+  const navigate = useNavigate();
 
   const getStepContent = useCallback(
     (step) => {
@@ -90,9 +91,10 @@ const BlogWriter = () => {
         steps={steps}
         setActiveStep={setActiveStep}
         activeStep={activeStep}
-        button1Label="Draft Saved"
         stepperWidth={450}
         columnGap={48}
+        onExit={() => navigate(`/dashboard/${brandId}`)}
+        enableStepperClick={false}
       />
       <Formik
         initialValues={initialValues}
