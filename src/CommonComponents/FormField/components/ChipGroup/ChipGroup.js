@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Typography, Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 
 const ChipGroup = ({ options, name, field, form }) => {
   const { value } = field;
