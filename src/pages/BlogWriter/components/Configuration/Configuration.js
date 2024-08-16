@@ -3,20 +3,20 @@ import axios from "axios";
 import { useFormikContext } from "formik";
 import { ML_API_URL } from "../../../../api";
 import FormField from "../../../../CommonComponents/FormField/FormField";
-import {
-  toneEmotionOptions,
-  toneFormalityOptions,
-  toneStyleOptions,
-} from "../../../BrandDna/components/BrandDNAForm/components/CommunicationStyle/Form/components/PersonalityForm/conts";
+import { toneFormalityOptions } from "../../../BrandDna/components/BrandDNAForm/components/CommunicationStyle/Form/components/PersonalityForm/conts";
 import BlogWriterCard from "../Card/Card";
 import InputSection from "./components/InputSection";
 
-const Configuration = ({ setActiveStep }) => {
+const Configuration = ({ setActiveStep, setGeneratedOutline }) => {
   const { values } = useFormikContext();
+
   const handleNext = () => {
     axios
       .post(`${ML_API_URL}/createai/generateoutline`, values)
       .then((response) => {
+        const data = response.data;
+        setGeneratedOutline(data.outline);
+        values.summaries = data.summaries;
         setActiveStep(3);
       })
       .catch((err) => {});

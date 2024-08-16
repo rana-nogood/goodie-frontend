@@ -79,7 +79,10 @@ const Workspace = () => {
   };
 
   return (
-    <WorkspacePageTemplate title="Workspace settings">
+    <WorkspacePageTemplate
+      title="Workspace settings"
+      navigateTo={`/dashboard/${brandId}`}
+    >
       <Grid container spacing={3} direction="row" alignItems="center">
         {cards.map((card, index) => {
           return (

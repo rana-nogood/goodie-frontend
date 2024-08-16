@@ -4,13 +4,16 @@ import ShortcutCard from "./components/ShorcutCard/ShortcutsCard";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import SignalCellularAltOutlinedIcon from "@mui/icons-material/SignalCellularAltOutlined";
 import LightbulbOutlinedIcon from "@mui/icons-material/LightbulbOutlined";
+import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
+import { useNavigate, useParams } from "react-router-dom";
+
 const shorcuts = [
   {
     icon: <EditOutlinedIcon style={{ color: "#78A419", fontSize: 30 }} />,
     title: "Write a blog",
     description: "Write a blog to boost your company’s AEO",
     backgroundColor: "#EBFFC1",
-    navigateTo: "/blog-writer",
+    navigateTo: "blog-writer",
   },
   {
     icon: (
@@ -32,8 +35,26 @@ const shorcuts = [
   },
 ];
 const Dashboard = () => {
+  const navigate = useNavigate();
+  const { brandId } = useParams();
   return (
     <PageTemplate>
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <Typography>workspace</Typography>
+        <Typography
+          onClick={() => navigate(`/workspace-settings/${brandId}`)}
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            columnGap: 3,
+            alignItems: "center",
+            fontWeight: 600,
+            cursor: "pointer",
+          }}
+        >
+          <SettingsOutlinedIcon style={{ fontSize: 20 }} /> Settings
+        </Typography>
+      </div>
       <Typography
         style={{
           fontSize: 40,

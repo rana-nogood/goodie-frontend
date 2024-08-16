@@ -1,13 +1,34 @@
 import BottomGradientContainer from "../../../../CommonComponents/BottomGradientContainer";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Snackbar } from "@mui/material";
 import BlogWriterCard from "../Card/Card";
 import ChipButton from "../../../../CommonComponents/ChipButton/ChipButton";
 import WestIcon from "@mui/icons-material/West";
 import PageTemplate from "../../../../CommonComponents/PageTemplate/PageTemplate";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { marked } from "marked";
+import { useState } from "react";
+import Alert from "@mui/material/Alert";
 
 const FinalBlog = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { finalBlog } = location.state || "";
+  const { brandId } = useParams();
+  const [open, setOpen] = useState(false);
+
+  const handleCopy = () => {
+    navigator.clipboard
+      .writeText(finalBlog)
+      .then(() => {
+        setOpen(true);
+      })
+      .catch((err) => {
+        console.error("Failed to copy text: ", err);
+      });
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
   return (
     <BottomGradientContainer gradient="linear-gradient(to top, #E3E4FC 0%, #FFFFFF 100%)">
       <PageTemplate>
@@ -19,7 +40,7 @@ const FinalBlog = () => {
           }}
         >
           <ChipButton
-            onClick={() => navigate("/workspace")}
+            onClick={() => navigate(`/dashboard/${brandId}/`)}
             iconBefore={<WestIcon />}
             label="Back"
             backgroundColor="#F5F5F5"
@@ -37,6 +58,7 @@ const FinalBlog = () => {
             fontSize="12.34px"
             fontWeight={450}
             columnGap={0.5}
+            onClick={() => handleCopy()}
           />
         </Box>
         <Box style={{ display: "flex", justifyContent: "center" }}>
@@ -57,18 +79,17 @@ const FinalBlog = () => {
             >
               <Typography
                 style={{ fontSize: 14, color: "#4D4D4D", maxWidth: 659 }}
-              >
-                Use the text editor to customize your blog post outline. The
-                structure is pre-filled based on your selected outline. You can
-                edit each section, add new content, and reorganize the structure
-                using drag-and-drop. Utilize the toolbar for rich text editing
-                options like bold, italic, headings, and bullet points. Save
-                your progress and preview the final structure at any time.
-              </Typography>
+                dangerouslySetInnerHTML={{ __html: marked(finalBlog) }}
+              />
             </Box>
           </BlogWriterCard>{" "}
         </Box>
       </PageTemplate>
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success">
+          Blog copied to clipboard!
+        </Alert>
+      </Snackbar>
     </BottomGradientContainer>
   );
 };

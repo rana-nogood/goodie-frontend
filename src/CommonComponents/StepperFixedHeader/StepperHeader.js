@@ -3,7 +3,6 @@ import { makeStyles } from "@mui/styles";
 import { useTheme } from "@emotion/react";
 import ChipButton from "../ChipButton/ChipButton";
 import CheckCircleOutlinedIcon from "@mui/icons-material/CheckCircleOutlined";
-import { useNavigate, useParams } from "react-router-dom";
 import CustomStepper from "../Stepper/Stepper";
 
 const useStyles = makeStyles((theme) => ({
@@ -32,11 +31,11 @@ const FixedStepperHeader = ({
   button1Label,
   stepperWidth,
   columnGap = 15,
+  onExit,
+  enableStepperClick,
 }) => {
   const theme = useTheme();
   const classes = useStyles(theme);
-  const navigate = useNavigate();
-  const { brandId } = useParams();
   return (
     <Box className={classes.stepper} sx={{ columnGap: columnGap }}>
       <CustomStepper
@@ -44,18 +43,23 @@ const FixedStepperHeader = ({
         setActiveStep={setActiveStep}
         activeStep={activeStep}
         width={stepperWidth}
+        enableStepperClick={enableStepperClick}
       />
       <div className={classes.buttonsBox} styles={{ columnGap: columnGap }}>
-        <ChipButton
-          label={button1Label}
-          iconBefore={<CheckCircleOutlinedIcon style={{ fontSize: "23px" }} />}
-          backgroundColor="#EBFFC1"
-          textColor="#1C3829"
-          padding="3px 8px"
-          fontSize="12.34px"
-          fontWeight={450}
-          columnGap={0.5}
-        />
+        {button1Label && (
+          <ChipButton
+            label={button1Label}
+            iconBefore={
+              <CheckCircleOutlinedIcon style={{ fontSize: "23px" }} />
+            }
+            backgroundColor="#EBFFC1"
+            textColor="#1C3829"
+            padding="3px 8px"
+            fontSize="12.34px"
+            fontWeight={450}
+            columnGap={0.5}
+          />
+        )}
         <ChipButton
           label="Exit"
           backgroundColor="#F5F5F5"
@@ -63,7 +67,7 @@ const FixedStepperHeader = ({
           padding="1px 0px"
           fontSize="12.34px"
           fontWeight={450}
-          onClick={() => navigate(`/workspace-settings/${brandId}`)}
+          onClick={() => onExit()}
         />{" "}
       </div>
     </Box>

@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { ErrorMessage, Field, FieldArray } from "formik";
 import TextField from "@mui/material/TextField";
 import FormControl from "@mui/material/FormControl";
 import Checkbox from "@mui/material/Checkbox";
 import { makeStyles } from "@mui/styles";
-
-import { Box, Button, Chip, FormGroup, Grid, Typography } from "@mui/material";
+import { Box, Button, FormGroup, Grid, Typography } from "@mui/material";
 import CheckBoxGroup from "./components/CheckBoxGroup/CheckBoxGroup";
 import AddMoreButton from "./components/AddMoreButton/AddMoreButton";
 import FormikTextField from "./components/TextField/TextField";
 import RadioButtonGroup from "./components/RadioButtonGroup";
 import ChipGroup from "./components/ChipGroup/ChipGroup";
-
+import ChipButton from "../ChipButton/ChipButton";
+import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 const useStyles = makeStyles((theme) => ({
   checkbox: {
     "& .MuiSvgIcon-root": {
@@ -75,6 +75,18 @@ const GenerateFormField = (
                 <TextField
                   {...field}
                   sx={customizedStyling ? customizedStyling : ""}
+                  InputProps={{
+                    sx: {
+                      "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                        border: "1px solid",
+                        borderColor: "#BAC1C9",
+                      },
+                      "&:hover .MuiOutlinedInput-notchedOutline": {
+                        border: "1px solid",
+                        borderColor: "#BAC1C9",
+                      },
+                    },
+                  }}
                   style={{ marginTop: customMargin }}
                   required={required}
                   id={name}
@@ -187,19 +199,36 @@ const GenerateFormField = (
                         "& fieldset": {
                           border: "1px solid rgba(0, 0, 0, 0.10)",
                         },
+                        "&:hover fieldset": {
+                          border: "1px solid",
+                          borderColor: "#BAC1C9",
+                        },
+                        "&.Mui-focused fieldset": {
+                          border: "1px solid",
+                          borderColor: "#BAC1C9",
+                        },
                       },
                     }}
+                    InputProps={{
+                      endAdornment: index > requiredInputsCount - 1 && (
+                        <ChipButton
+                          label="Remove"
+                          backgroundColor="#F5F5F5"
+                          textColor="#797979"
+                          padding="1.5px 10px"
+                          fontSize="14px"
+                          fontWeight={450}
+                          columnGap={0.5}
+                          onClick={() => remove(index)}
+                          iconBefore={
+                            <CloseOutlinedIcon
+                              style={{ fontSize: 14, color: "#797979" }}
+                            />
+                          }
+                        />
+                      ),
+                    }}
                   />
-                  {index > requiredInputsCount - 1 && (
-                    // TO-DO : wait for styling from designer
-                    <Button
-                      variant="outlined"
-                      color="error"
-                      onClick={() => remove(index)}
-                    >
-                      Remove
-                    </Button>
-                  )}
                 </div>
               ))}
               <AddMoreButton onClick={() => push("")} />
@@ -316,14 +345,21 @@ const GenerateFormField = (
                   </Grid>
                   {index > requiredInputsCount - 1 && (
                     <Grid item xs={2}>
-                      <Button
-                        type="button" // TO-DO : wait for styling from designer
-                        variant="contained"
-                        color="secondary"
+                      <ChipButton
+                        label="Remove"
+                        backgroundColor="#F5F5F5"
+                        textColor="#797979"
+                        padding="1.5px 10px"
+                        fontSize="14px"
+                        fontWeight={450}
+                        columnGap={0.5}
                         onClick={() => remove(index)}
-                      >
-                        Remove
-                      </Button>
+                        iconBefore={
+                          <CloseOutlinedIcon
+                            style={{ fontSize: 14, color: "#797979" }}
+                          />
+                        }
+                      />{" "}
                     </Grid>
                   )}
                 </Grid>
@@ -433,6 +469,18 @@ const GenerateFormField = (
             return (
               <TextField
                 sx={customizedStyling ? customizedStyling : ""}
+                InputProps={{
+                  sx: {
+                    "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                      border: "1px solid",
+                      borderColor: "#BAC1C9",
+                    },
+                    "&:hover .MuiOutlinedInput-notchedOutline": {
+                      border: "1px solid",
+                      borderColor: "#BAC1C9",
+                    },
+                  },
+                }}
                 style={{ margin: customMargin ? customMargin : 12 }}
                 required={required}
                 id={name}

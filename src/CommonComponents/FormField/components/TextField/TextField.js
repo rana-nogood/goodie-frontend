@@ -14,7 +14,15 @@ const FormikTextField = ({ name, placeholder, startAdornment }) => {
       sx={{
         "& .MuiOutlinedInput-root": {
           "& fieldset": {
-            border: "1px solid rgba(0, 0, 0, 0.10)",
+            border: "1px solid rgba(0, 0, 0, 0.10)", // Default border
+          },
+          "&:hover fieldset": {
+            border: "1px solid",
+            borderColor: "#BAC1C9",
+          },
+          "&.Mui-focused fieldset": {
+            border: "1px solid",
+            borderColor: "#BAC1C9",
           },
         },
       }}
