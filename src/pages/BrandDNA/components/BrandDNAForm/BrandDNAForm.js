@@ -118,7 +118,7 @@ const BrandDNA = () => {
       logo_usage: brandDetails?.logo_usage,
       imagery_style: brandDetails?.imagery_style,
     }),
-    [brandDetails]
+    [brandId,brandDetails]
   );
   return (
     <BottomGradientContainer gradient="linear-gradient(to top, #C7F565 0%, #FFFFFF 100%)">
