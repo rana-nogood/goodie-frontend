@@ -6,12 +6,12 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./index.css";
 import Home from "./pages/Home";
 import BrandDNAForm from "./pages/BrandDna/components/BrandDNAForm";
-import BrandDnaOverView from "./pages/BrandDna";
 import BlogWriter from "./pages/BlogWriter";
 import Workspace from "./pages/Workspace";
 import Layout from "./CommonComponents/Layout/Layout";
 import Dashboard from "./pages/Dashboard";
 import FinalBlog from "./pages/BlogWriter/components/FinalBlog/FinalBlog";
+import BrandDnaOverview from "./pages/BrandDna/BrandDnaOverView";
 
 const theme = createTheme({
   typography: {
@@ -60,7 +60,7 @@ function App() {
               />
               <Route
                 path="/workspace-settings/:brandId/brand-dna-overview"
-                element={<BrandDnaOverView />}
+                element={<BrandDnaOverview />}
               />
               <Route path="/dashboard/:brandId/blog-writer/:title" element={<FinalBlog />} />
             </Route>
