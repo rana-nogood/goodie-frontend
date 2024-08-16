@@ -1,7 +1,6 @@
 import { Grid, Typography } from "@mui/material";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { API_URL } from "../../api";
 import WorkspacePageTemplate from "../Workspace/components/PageTemplate/PageTemplate";
 import BrandDNAOverviewCard from "./components/Card/Card";
 
